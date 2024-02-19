@@ -8,5 +8,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        repository: ${{ github.repository }}.wiki.git
+        repository: ${{ github.repository }}.wiki
     - run: make
