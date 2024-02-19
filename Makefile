@@ -1,7 +1,7 @@
 all: .site
 
 wiki/.commit:
-	git clone git@github.com:freenet/wiki.wiki.git $(dir $@) && cd wiki && git log HEAD^..HEAD --oneline --no-decorate > .commit
+	git log HEAD^..HEAD --oneline --no-decorate > .commit
 
 FILES = $(wildcard wiki/*.md) $(wildcard wiki/*.mediawiki) $(wildcard wiki/*.textile)
 
