@@ -1,4 +1,4 @@
-name: make
+name: site
 on:
   push:
   pull_request:
@@ -10,7 +10,6 @@ jobs:
       with:
         repository: ${{ github.repository }}.wiki
     - run: |
-        FILES = $(wildcard wiki/*.md) $(wildcard wiki/*.mediawiki) $(wildcard wiki/*.textile)
         mkdir site;
         for file in wiki/*.md; do
           pandoc "$(file)" -o "site/`basename $file`.html"
