@@ -9,10 +9,14 @@ jobs:
     - uses: actions/checkout@v4
       with:
         repository: ${{ github.repository }}.wiki
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: pandoc
+        version: 1.0
     - run: |
         mkdir site;
         for file in wiki/*.md; do
-          pandoc "$(file)" -o "site/`basename $file`.html"
+          pandoc "$file" -o "site/`basename $file`.html"
           if ! test -e "site/`basename $file`.html"; then
             cp "$file" site/
             emacs -nw -q -L $dir "site/$file" --eval "(require 'wikipedia-mode)" \
