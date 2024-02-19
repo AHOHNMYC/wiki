@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  build:
+  create_html:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -13,7 +13,11 @@ jobs:
       with:
         packages: pandoc
         version: 1.0
-    - run: mkdir site; for file in *.md; pandoc "$file" -o "site/`basename $file|sed s/md$/html/`"
+    - run: |
+        mkdir site;
+        for file in *.md; do
+          pandoc "$file" -o "site/`basename $file|sed s/md$/html/`"
+        done
     - uses: actions/upload-artifact@v4
       with:
         name: site
