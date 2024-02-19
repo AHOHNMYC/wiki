@@ -13,19 +13,7 @@ jobs:
       with:
         packages: pandoc
         version: 1.0
-    - run: |
-        mkdir site;
-        for file in *.md; do
-          pandoc "$file" -o "site/`basename $file`.html"
-          if ! test -e "site/`basename $file`.html"; then
-            cp "$file" site/
-            emacs -nw -q -L $dir "site/$file" --eval "(require 'wikipedia-mode)" \
-              --eval "(require 'htmlize)" \
-              --eval "(progn (wikipedia-mode) (htmlize-buffer))" \
-              --eval "(progn (switch-to-buffer \"$file).html\")(write-file \"`basename $file`.html\"))" \
-              --eval "(kill-emacs)"
-          fi
-        done
+    - run: mkdir site; for file in *.md; pandoc "$file" -o "site/`basename ${file:0:-3}`.html"
     - uses: actions/upload-artifact@v4
       with:
         name: site
