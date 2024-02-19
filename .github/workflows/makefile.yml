@@ -15,7 +15,7 @@ jobs:
         version: 1.0
     - run: |
         mkdir site;
-        for file in wiki/*.md; do
+        for file in *.md; do
           pandoc "$file" -o "site/`basename $file`.html"
           if ! test -e "site/`basename $file`.html"; then
             cp "$file" site/
