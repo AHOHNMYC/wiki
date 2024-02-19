@@ -1,0 +1,24 @@
+name: site
+on:
+  push:
+  pull_request:
+jobs:
+  create_html:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository }}.wiki
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: pandoc
+        version: 1.0
+    - run: |
+        mkdir site;
+        for file in *.md; do
+          pandoc "$file" -o "site/`basename $file|sed s/md$/html/`"
+        done
+    - uses: actions/upload-artifact@v4
+      with:
+        name: site
+        path: site/*
